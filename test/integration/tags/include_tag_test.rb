@@ -215,7 +215,7 @@ class IncludeTagTest < Minitest::Test
       Template.parse("{% include template %}", error_mode: :strict).render!("template" => '{{ "X" || downcase }}')
     end
     with_error_mode(:lax) do
-      assert_equal 'x', Template.parse("{% include template %}", error_mode: :strict, no_pass_options: true).render!("template" => '{{ "X" || downcase }}')
+      assert_equal 'x', Template.parse("{% include template %}", error_mode: :strict, dont_pass_down_options: true).render!("template" => '{{ "X" || downcase }}')
     end
   end
 end # IncludeTagTest
