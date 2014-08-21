@@ -69,7 +69,8 @@ module Liquid
           return cached
         end
         source = read_template_from_file_system(context)
-        partial = Liquid::Template.parse(source, @options.merge(included: true))
+        pass_options = @options[:no_pass_options] ? {} : @options.merge(included: true)
+        partial = Liquid::Template.parse(source, pass_options)
         cached_partials[template_name] = partial
         context.registers[:cached_partials] = cached_partials
         partial
