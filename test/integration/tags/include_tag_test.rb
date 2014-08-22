@@ -217,5 +217,11 @@ class IncludeTagTest < Minitest::Test
     with_error_mode(:lax) do
       assert_equal 'x', Template.parse("{% include template %}", error_mode: :strict, dont_pass_down_options: true).render!("template" => '{{ "X" || downcase }}')
     end
+    assert_raises(Liquid::SyntaxError) do
+      Template.parse("{% include template %}", error_mode: :strict, dont_pass_down_options: [:locale]).render!("template" => '{{ "X" || downcase }}')
+    end
+    with_error_mode(:lax) do
+      assert_equal 'x', Template.parse("{% include template %}", error_mode: :strict, dont_pass_down_options: [:error_mode]).render!("template" => '{{ "X" || downcase }}')
+    end
   end
 end # IncludeTagTest
